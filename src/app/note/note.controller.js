@@ -5,7 +5,7 @@ async function createNote(req, res, next) {
         const { title, content } = req.body;
         const { userId } = req.query;
         const data = await noteService.createNote(title, content, userId);
-        res.status(201).json({ message: "Note created", data });
+        res.status(201).json({ message: "Note created successfully", data });
     } catch (error) {
         next(error);
     }
@@ -22,7 +22,7 @@ async function updateNote(req, res, next) {
             title,
             content,
         );
-        res.status(200).json({ message: "updated", data: note });
+        res.status(200).json({ message: "Note updated successfully", data: note });
     } catch (error) {
         next(error);
     }
@@ -40,7 +40,7 @@ async function replaceNote(req, res, next) {
             title,
             content,
         );
-        res.status(200).json({ message: "replaced", data: note });
+        res.status(200).json({ message: "Note replaced successfully", data: note });
     } catch (error) {
         next(error);
     }
@@ -51,7 +51,7 @@ async function updateAllTitleNotes(req, res, next) {
         const { title } = req.body;
         const { userId } = req.query;
         await noteService.updateAllTitleNotes(userId, title);
-        res.status(200).json({ message: "All notes updated" });
+        res.status(200).json({ message: "All notes updated successfully" });
     } catch (error) {
         next(error);
     }
@@ -68,15 +68,16 @@ async function deleteNote(req, res, next) {
     }
 }
 
-async function getNotesWithPaginationAndLimit(req, res, next) {
+async function getNotesWithPaginationAndSortByCreatedAt(req, res, next) {
     try {
         const { userId, page, limit } = req.query;
-        const notes = await noteService.getNotesWithPaginationAndLimit(
-            userId,
-            page,
-            limit,
-        );
-        res.status(200).json({ message: "Notes retrieved", data: notes });
+        const notes =
+            await noteService.getNotesWithPaginationAndSortByCreatedAt(
+                userId,
+                page,
+                limit,
+            );
+        res.status(200).json({ message: "Notes retrieved successfully", data: notes });
     } catch (error) {
         next(error);
     }
@@ -87,7 +88,7 @@ async function getNote(req, res, next) {
         const { noteId } = req.params;
         const { userId } = req.query;
         const note = await noteService.getNote(userId, noteId);
-        res.status(200).json({ message: "Note retrieved", data: note });
+        res.status(200).json({ message: "Note retrieved successfully", data: note });
     } catch (error) {
         next(error);
     }
@@ -98,7 +99,7 @@ async function getNoteByContent(req, res, next) {
         const { content } = req.query;
         const { userId } = req.query;
         const note = await noteService.getNoteByContent(content, userId);
-        res.status(200).json({ message: "Note retrieved", data: note });
+        res.status(200).json({ message: "Note retrieved successfully", data: note });
     } catch (error) {
         next(error);
     }
@@ -108,22 +109,7 @@ async function getAllNotesWithUser(req, res, next) {
     try {
         const { userId } = req.query;
         const notes = await noteService.getAllNotesWithUser(userId);
-        res.status(200).json({ message: "Notes retrieved", data: notes });
-    } catch (error) {
-        next(error);
-    }
-}
-
-async function getNotesWithPaginationAndSortByCreatedAt(req, res, next) {
-    try {
-        const { userId, page, limit } = req.query;
-        const notes =
-            await noteService.getNotesWithPaginationAndSortByCreatedAt(
-                userId,
-                page,
-                limit,
-            );
-        res.status(200).json({ message: "Notes retrieved", data: notes });
+        res.status(200).json({ message: "Notes retrieved successfully", data: notes });
     } catch (error) {
         next(error);
     }
@@ -136,7 +122,7 @@ async function getAllNotesAggregateWithUserByTitle(req, res, next) {
             userId,
             title,
         );
-        res.status(200).json({ message: "Notes retrieved", data: notes });
+        res.status(200).json({ message: "Notes retrieved successfully", data: notes });
     } catch (error) {
         next(error);
     }
